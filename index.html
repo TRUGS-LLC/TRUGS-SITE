@@ -174,6 +174,17 @@
   .pair pre i{color:#d4a04a;font-style:normal}
   @media (max-width:640px){ .pair{grid-template-columns:1fr} }
   .same{font-family:var(--font-mono);font-size:.8rem;color:var(--ok);margin-top:12px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:24px;border-top:1px solid var(--rule)}
+  .split > div{padding:20px 20px 8px 0;border-bottom:1px solid var(--rule)}
+  .split > div + div{border-left:1px solid var(--rule);padding-left:20px}
+  .split .k{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .split p{font-size:.95rem;color:var(--ink-soft);margin:0 0 .7em}
+  .split .fixed{color:var(--ink-faint);font-family:var(--font-mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase}
+  @media (max-width:600px){ .split{grid-template-columns:1fr} .split > div + div{border-left:0;padding-left:0} }
+  .steps-n{margin:24px 0 0;padding-left:1.35em;max-width:68ch}
+  .steps-n li{margin-bottom:9px;color:var(--ink-soft)}
+  .steps-n li.must{color:var(--ink);font-weight:500}
+  .steps-n li.must b{color:var(--accent)}
   .pullquote{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.15rem,2.2vw,1.4rem);line-height:1.45;border-left:3px solid var(--accent);padding-left:20px;margin:26px 0 0;max-width:40ch}
 
   footer{padding-top:26px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--ink-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -429,7 +440,29 @@ trug-a-folder check .</pre>
       </div>
       <div class="prose">
         <p>CORE and the language are maintained by TRUGS LLC. The vocabulary, grammar and validation rules are the specification; they do not change without a spec revision.</p>
-        <p>Branches are where everyone else builds. Define your domain's node types and edge relations, use CORE primitives as the foundation, add your words to your opening TRUG, and validate against CORE.</p>
+        <p>Branches are where everyone else builds — domain vocabulary layered on CORE for medicine, finance, law, robotics, or whatever CORE does not already carry.</p>
+        <ol class="steps-n">
+          <li>Define your domain's node types and edge relations.</li>
+          <li>Use CORE primitives as the foundation.</li>
+          <li>Declare the extensions your branch requires.</li>
+          <li>Add your domain's words to your opening TRUG.</li>
+          <li class="must"><b>Ship a validator for your branch.</b> Your branch's semantics are yours to check — nothing else will.</li>
+        </ol>
+        <p style="margin-top:20px">That last step is the one people skip, and it is the one that matters. The division is fixed:</p>
+        <div class="split">
+          <div>
+            <div class="k">CORE validates structure</div>
+            <p>Node identity, edge validity, hierarchy, metric ordering, declared dimensions, required fields, field types, declared extensions, level format.</p>
+            <p class="fixed">Universal · unchanged without a spec revision</p>
+          </div>
+          <div>
+            <div class="k">Branches validate semantics</div>
+            <p>Whether your domain's vocabulary is used correctly — that an operation spec declares the capability it needs, that your types carry what your domain requires.</p>
+            <p class="fixed">Yours to write · yours to maintain</p>
+          </div>
+        </div>
+        <p style="margin-top:22px;max-width:68ch"><strong>Every TRUG passes CORE validation regardless of branch</strong> — so CORE passing is not your branch passing. A branch that ships no validator produces graphs that are structurally sound and semantically unchecked, which forfeits, for your domain, the one property the specification exists to provide.</p>
+
         <p class="pullquote">You don't need permission. Build it, use it, share it.</p>
         <p style="margin-top:26px">Once enough people use a branch in the same domain, it can be formalized into the specification through the community. Implementations in any language are welcome — read, write, validate or execute TRUGs however you like. The spec is the contract.</p>
       </div>
