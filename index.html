@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TRUGS Specification</title>
+<meta name="description" content="TRUGS — the Traceable Recursive Universal Graph Specification. A JSON graph specification with a 233-word formal English subset that compiles losslessly to graphs and back. Apache 2.0, maintained by TRUGS LLC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1f3f5;
+    --surface:#ffffff;
+    --ink:#11161b;
+    --ink-soft:#4d5a66;
+    --ink-faint:#7b8794;
+    --rule:#d5dbe0;
+    --accent:#1f3fd1;
+    --accent-soft:#e3e8fb;
+    --code-bg:#11161b;
+    --code-fg:#e6ebf0;
+    --code-accent:#8fa8ff;
+    --ok:#1d6b4f;
+    --font-sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --font-serif:'IBM Plex Serif',Georgia,serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0d1116;
+      --surface:#151b22;
+      --ink:#e7edf3;
+      --ink-soft:#9fb0bf;
+      --ink-faint:#71808e;
+      --rule:#242e38;
+      --accent:#8fa8ff;
+      --accent-soft:#1a2440;
+      --code-bg:#080b0f;
+      --code-fg:#dbe4ec;
+      --code-accent:#8fa8ff;
+      --ok:#5fc39b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0d1116;
+    --surface:#151b22;
+    --ink:#e7edf3;
+    --ink-soft:#9fb0bf;
+    --ink-faint:#71808e;
+    --rule:#242e38;
+    --accent:#8fa8ff;
+    --accent-soft:#1a2440;
+    --code-bg:#080b0f;
+    --code-fg:#dbe4ec;
+    --code-accent:#8fa8ff;
+    --ok:#5fc39b;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--font-sans);font-size:1.02rem;line-height:1.6;
+    padding-inline:20px;padding-block:0 80px;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  h1,h2,h3{margin:0;line-height:1.15;font-weight:600;text-wrap:balance;letter-spacing:-.015em}
+  h2{font-size:clamp(1.55rem,3vw,2.1rem)}
+  h3{font-size:1.12rem;font-weight:600}
+  p{margin:0 0 1em}
+  .wrap{max-width:880px;margin:0 auto}
+  .prose{max-width:68ch}
+  .mono{font-family:var(--font-mono)}
+  .label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+  /* header */
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-block:20px 16px;border-bottom:1px solid var(--rule)}
+  .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .brand .name{font-family:var(--font-mono);font-size:1.15rem;font-weight:600;letter-spacing:.14em;color:var(--ink);text-decoration:none}
+  .chip{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;padding:2px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink-soft)}
+  .chip.v{border-color:var(--accent);color:var(--accent)}
+  header.top nav{display:flex;gap:18px;flex-wrap:wrap}
+  header.top nav a{font-size:.88rem;font-weight:500;color:var(--ink-soft);text-decoration:none}
+  header.top nav a:hover{color:var(--accent)}
+
+  /* hero */
+  .hero{padding-block:60px 48px;border-bottom:1px solid var(--rule)}
+  .hero h1{font-size:clamp(1.9rem,4.6vw,3rem);max-width:19ch}
+  .expand{font-family:var(--font-mono);font-size:clamp(.82rem,1.7vw,.98rem);color:var(--ink-soft);margin-bottom:20px;letter-spacing:.02em}
+  .expand b{color:var(--accent);font-weight:600}
+  .hero .lede{font-size:clamp(1.05rem,1.9vw,1.2rem);color:var(--ink-soft);max-width:60ch;margin-top:20px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .btn{display:inline-block;padding:11px 18px;border-radius:4px;font-weight:600;font-size:.94rem;text-decoration:none;border:1.5px solid var(--accent);transition:background .15s,color .15s}
+  .btn.solid{background:var(--accent);color:var(--paper)}
+  .btn.solid:hover{background:transparent;color:var(--accent)}
+  .btn.line{color:var(--accent)}
+  .btn.line:hover{background:var(--accent-soft)}
+
+  section{padding-block:56px;border-bottom:1px solid var(--rule);scroll-margin-top:12px}
+  section:last-of-type{border-bottom:none}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:28px 44px;align-items:start}
+  @media (max-width:740px){ .grid{grid-template-columns:1fr;gap:16px} }
+
+  /* code */
+  pre{
+    background:var(--code-bg);color:var(--code-fg);font-family:var(--font-mono);
+    font-size:.85rem;line-height:1.65;padding:18px 20px;border-radius:6px;
+    overflow-x:auto;margin:0;
+  }
+  pre b{color:var(--code-accent);font-weight:600}
+  pre .c{color:#7b8794}
+  code{font-family:var(--font-mono);font-size:.9em;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:3px}
+
+  /* round trip */
+  .rt{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-top:28px}
+  .rt .side{border:1px solid var(--rule);border-radius:6px;padding:16px 18px;background:var(--surface)}
+  .rt .side .k{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+  .rt .side .v{font-family:var(--font-mono);font-size:.88rem;color:var(--ink)}
+  .rt .arrow{font-family:var(--font-mono);font-size:1.3rem;color:var(--accent);text-align:center;line-height:1.2}
+  .rt .arrow small{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  @media (max-width:620px){ .rt{grid-template-columns:1fr} .rt .arrow{transform:rotate(90deg);padding-block:4px} }
+  .lossless{font-family:var(--font-serif);font-size:clamp(1.2rem,2.4vw,1.55rem);line-height:1.4;margin-top:26px;max-width:32ch;color:var(--ink)}
+
+  /* ruled lists */
+  .dl{margin:24px 0 0;border-top:1px solid var(--rule)}
+  .dl > div{display:grid;grid-template-columns:minmax(8rem,11rem) minmax(0,1fr);gap:4px 22px;padding-block:14px;border-bottom:1px solid var(--rule)}
+  .dl dt{font-weight:600;margin:0}
+  .dl dd{margin:0;color:var(--ink-soft);font-size:.96rem}
+  @media (max-width:560px){ .dl > div{grid-template-columns:1fr} }
+
+  /* numbers row */
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0;margin-top:26px;border-top:1px solid var(--rule)}
+  .nums div{padding:20px 18px 14px 0;border-bottom:1px solid var(--rule)}
+  .nums div + div{border-left:1px solid var(--rule);padding-left:18px}
+  .nums .n{font-family:var(--font-mono);font-size:1.75rem;font-weight:600;color:var(--accent);display:block;line-height:1}
+  .nums .t{font-size:.88rem;color:var(--ink-soft);margin-top:6px;display:block}
+  @media (max-width:620px){ .nums{grid-template-columns:1fr 1fr} .nums div:nth-child(odd){border-left:0;padding-left:0} }
+
+  /* doc table */
+  .tbl{width:100%;border-collapse:collapse;margin-top:24px;font-size:.94rem}
+  .tbl th{text-align:left;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;padding:0 14px 10px 0;border-bottom:1px solid var(--rule)}
+  .tbl td{padding:12px 14px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-soft)}
+  .tbl td:first-child{white-space:nowrap}
+  .tbl td a{font-family:var(--font-mono);font-size:.88rem;font-weight:500;text-decoration:none}
+  .tbl td a:hover{text-decoration:underline}
+  .tbl-scroll{overflow-x:auto}
+
+  /* callout — used once */
+  .warn{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 20px;border-radius:0 5px 5px 0;margin-top:24px;font-size:.95rem;max-width:68ch}
+  .warn b{color:var(--ink)}
+
+  .domains{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .domains span{font-family:var(--font-mono);font-size:.82rem;padding:5px 11px;border:1px solid var(--rule);border-radius:3px;color:var(--ink-soft)}
+
+  .pullquote{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.15rem,2.2vw,1.4rem);line-height:1.45;border-left:3px solid var(--accent);padding-left:20px;margin:26px 0 0;max-width:40ch}
+
+  footer{padding-top:26px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--ink-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--ink-soft)}
+  footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <a class="name" href="#top">TRUGS</a>
+      <span class="chip v">2.0.0</span>
+      <span class="chip">Apache-2.0</span>
+    </div>
+    <nav aria-label="Sections">
+      <a href="#what">What it is</a>
+      <a href="#language">Language</a>
+      <a href="#core">CORE</a>
+      <a href="#spec">Specification</a>
+      <a href="#tools">Tooling</a>
+      <a href="#build">Build on it</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top" aria-labelledby="h1">
+    <p class="expand"><b>T</b>raceable <b>R</b>ecursive <b>U</b>niversal <b>G</b>raph <b>S</b>pecification</p>
+    <h1 id="h1">A graph specification with a language that compiles to it.</h1>
+    <p class="lede">TRUGS is a JSON graph format for representing structured information — and a 233-word formal subset of English in which every valid sentence compiles to a graph, and every graph decompiles back to a sentence. Losslessly.</p>
+    <div class="cta">
+      <a class="btn solid" href="https://github.com/TRUGS-LLC/TRUGS">Read the specification</a>
+      <a class="btn line" href="#tools">Install the tooling</a>
+    </div>
+  </section>
+
+  <section id="what" aria-labelledby="what-h">
+    <div class="grid">
+      <div>
+        <div class="label">What it is</div>
+        <h2 id="what-h">Three components, one file.</h2>
+      </div>
+      <div class="prose">
+        <p>A TRUG is a JSON file. Nodes are typed things — functions, pages, chapters, tasks, parties. Edges are named relationships between them. Hierarchy organizes them by parent and child containment, using metric levels as the transition markers.</p>
+        <p>The specification is the repository. There is nothing to install in order to read it: the Markdown specs and the <code>.trug.json</code> files are the normative text.</p>
+      </div>
+    </div>
+
+    <div class="rt">
+      <div class="side">
+        <div class="k">TRUG/L sentence</div>
+        <div class="v">233 words · 9 parts of speech</div>
+      </div>
+      <div class="arrow">⇄<small>compile · decompile</small></div>
+      <div class="side">
+        <div class="k">TRUG graph</div>
+        <div class="v">nodes · edges · hierarchy</div>
+      </div>
+    </div>
+    <p class="lossless">The sentence is the program. The graph is the AST.</p>
+  </section>
+
+  <section id="language" aria-labelledby="lang-h">
+    <div class="grid">
+      <div>
+        <div class="label">The language</div>
+        <h2 id="lang-h">TRUG/L</h2>
+      </div>
+      <div class="prose">
+        <p>A formalized subset of English drawn from computation, law, and the SI prefixes. Every word is in the vocabulary; nothing outside it parses. Write a sentence, get a graph — and the graph will give you the sentence back unchanged.</p>
+      </div>
+    </div>
+
+    <pre aria-label="An example TRUG/L sentence"><b>PARTY</b> system <b>SHALL FILTER ALL ACTIVE</b> RECORD
+  <b>THEN SORT</b> RESULT
+  <b>THEN WRITE</b> RESULT <b>TO</b> ENDPOINT output
+  <b>OR RETRY BOUNDED</b> 3 <b>WITHIN</b> 60s.</pre>
+
+    <div class="nums">
+      <div><span class="n">233</span><span class="t">words in the vocabulary</span></div>
+      <div><span class="n">9</span><span class="t">parts of speech</span></div>
+      <div><span class="n">21</span><span class="t">SI level prefixes, new at 2.0.0</span></div>
+      <div><span class="n">30</span><span class="t">parsed examples, 13 patterns</span></div>
+    </div>
+  </section>
+
+  <section id="core" aria-labelledby="core-h">
+    <div class="grid">
+      <div>
+        <div class="label">The contract</div>
+        <h2 id="core-h">CORE + BRANCH = a complete TRUG.</h2>
+      </div>
+      <div class="prose">
+        <p><strong>CORE</strong> defines the universal structure every TRUG must satisfy — the boundaries, the primitive classes, the validation rules, and the composition type system. It does not change without a spec revision.</p>
+        <p><strong>BRANCHES</strong> define domain-specific vocabularies on top of it. Medical, financial, legal, robotics — whatever your domain needs that CORE does not already carry.</p>
+      </div>
+    </div>
+
+    <div class="nums">
+      <div><span class="n">7</span><span class="t">boundaries</span></div>
+      <div><span class="n">10</span><span class="t">primitive classes</span></div>
+      <div><span class="n">~131</span><span class="t">primitives</span></div>
+      <div><span class="n">16</span><span class="t">validation rules</span></div>
+    </div>
+  </section>
+
+  <section id="spec" aria-labelledby="spec-h">
+    <div class="grid">
+      <div>
+        <div class="label">Specification</div>
+        <h2 id="spec-h">The normative documents.</h2>
+      </div>
+      <div class="prose">
+        <p>All of it lives in the repository, versioned with the spec. <code>language.trug.json</code> is the opening TRUG — the language defining itself.</p>
+      </div>
+    </div>
+
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>Document</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/CORE.md">CORE.md</a></td><td>Boundaries, primitive classes, the 16 validation rules, composition type system</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/BRANCHES.md">BRANCHES.md</a></td><td>Domain vocabularies — Python, Web, Writer, Knowledge and others</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SPEC_fundamentals.md">SPEC_fundamentals.md</a></td><td>Core concepts and structure</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SPEC_validation.md">SPEC_validation.md</a></td><td>Validation rules, with implementations</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SCHEMA.md">SCHEMA.md</a></td><td>JSON schema reference</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_vocabulary.md">SPEC_vocabulary.md</a></td><td>The 233 words, 9 parts of speech, formal definitions</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_grammar.md">SPEC_grammar.md</a></td><td>BNF grammar, composition rules, 12 validation rules</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_examples.md">SPEC_examples.md</a></td><td>30 parsed examples across 13 patterns</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/CHEATSHEET.md">CHEATSHEET.md</a></td><td>The vocabulary at a glance</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/language.trug.json">language.trug.json</a></td><td>The opening TRUG — the language defining itself</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="tools" aria-labelledby="tools-h">
+    <div class="grid">
+      <div>
+        <div class="label">Tooling</div>
+        <h2 id="tools-h">The <span class="mono">trug</span> CLI.</h2>
+      </div>
+      <div class="prose">
+        <p>Validation, TRL compile and decompile, graph CRUD, and compliance checking — eight language verbs. Filesystem-to-graph cartography ships separately.</p>
+      </div>
+    </div>
+
+    <pre aria-label="Installation commands"><span class="c"># the language CLI — 8 verbs</span>
+pip install trugs-tools
+trug --help
+
+<span class="c"># validate a graph against all 16 CORE rules</span>
+trug validate path/to/file.trug.json
+trug validate --all ./graphs
+
+<span class="c"># filesystem ↔ graph cartography, separate package</span>
+pip install trugs-folder
+trug-a-folder check .</pre>
+
+    <div class="warn">
+      <b>Do not install <code>trugs</code>.</b> As of 2.0.0 that PyPI name is a reserved, intentionally empty placeholder — it ships no CLI and no importable content. The tooling is <code>trugs-tools</code>. If you are coming from 1.x, the console script was renamed <code>tg</code> → <code>trug</code>, and the cartography verbs <code>check</code>, <code>ls</code>, <code>sync</code> and <code>render</code> moved out to <code>trug-a-folder</code>.
+    </div>
+  </section>
+
+  <section id="examples" aria-labelledby="ex-h">
+    <div class="grid">
+      <div>
+        <div class="label">Examples</div>
+        <h2 id="ex-h">Seven domains, all validating.</h2>
+      </div>
+      <div class="prose">
+        <p>Sample TRUGs at varying complexity in the <a href="https://github.com/TRUGS-LLC/TRUGS/tree/main/EXAMPLES">EXAMPLES</a> directory. Every one of them passes validation in CI.</p>
+        <div class="domains">
+          <span>knowledge</span><span>living</span><span>memory</span><span>nested</span><span>research</span><span>web</span><span>writer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="selfhost" aria-labelledby="self-h">
+    <div class="grid">
+      <div>
+        <div class="label">Self-describing</div>
+        <h2 id="self-h">The repository is itself a TRUG.</h2>
+      </div>
+      <div class="prose">
+        <p><code>folder.trug.json</code> at the repository root is a machine-readable index: every top-level folder, every reference document and every public tool has a node, with typed edges to the specs it implements or describes.</p>
+        <p>CI runs the full check plus <code>trug compliance</code> on every push and pull request. The section list in the README, the specification index, and the tool table all correspond to nodes you can traverse programmatically — and when the graph drifts from the prose or the filesystem, the build fails.</p>
+      </div>
+    </div>
+    <pre aria-label="Traversing the repository graph"><span class="c"># what is in this repo?</span>
+trug-a-folder ls .
+
+<span class="c"># what does a tool implement, and what tests it?</span>
+trug get folder.trug.json tools_build_language_trug --edges
+
+<span class="c"># does the graph still match the filesystem?</span>
+trug-a-folder check .</pre>
+  </section>
+
+  <section id="build" aria-labelledby="build-h">
+    <div class="grid">
+      <div>
+        <div class="label">Build on it</div>
+        <h2 id="build-h">Branches and implementations.</h2>
+      </div>
+      <div class="prose">
+        <p>CORE and the language are maintained by TRUGS LLC. The vocabulary, grammar and validation rules are the specification; they do not change without a spec revision.</p>
+        <p>Branches are where everyone else builds. Define your domain's node types and edge relations, use CORE primitives as the foundation, add your words to your opening TRUG, and validate against CORE.</p>
+        <p class="pullquote">You don't need permission. Build it, use it, share it.</p>
+        <p style="margin-top:26px">Once enough people use a branch in the same domain, it can be formalized into the specification through the community. Implementations in any language are welcome — read, write, validate or execute TRUGs however you like. The spec is the contract.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="license" aria-labelledby="lic-h">
+    <div class="grid">
+      <div>
+        <div class="label">License &amp; citation</div>
+        <h2 id="lic-h">Apache 2.0. Anyone may implement it.</h2>
+      </div>
+      <div class="prose">
+        <p>The specification and its reference tools are released under the <a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/LICENSE">Apache License 2.0</a>. The standard is stewarded by <strong>TRUGS LLC</strong>, which maintains CORE and the language and holds the specification neutral of any one implementer.</p>
+        <p>The published record is <a href="https://doi.org/10.5281/zenodo.19379454">DOI 10.5281/zenodo.19379454</a>. Requires Python 3.10 or later for the reference tooling.</p>
+      </div>
+    </div>
+    <div class="dl">
+      <div><dt>Specification</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS">TRUGS-LLC/TRUGS</a> — the normative text, examples, and the self-describing graph</dd></div>
+      <div><dt>Language CLI</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-TOOLS">TRUGS-LLC/TRUGS-TOOLS</a> — <code>trugs-tools</code>, the <code>trug</code> binary</dd></div>
+      <div><dt>Agent protocol</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-LLC/TRUGS-AGENT</a> — one file that teaches an LLM to speak TRUG/L, with a development protocol, a portfolio tracker and persistent memory</dd></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 TRUGS LLC · Apache-2.0 · Specification v2.0.0</div>
+    <div><a href="https://github.com/TRUGS-LLC">github.com/TRUGS-LLC</a> · <a href="https://doi.org/10.5281/zenodo.19379454">DOI</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
