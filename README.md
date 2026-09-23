@@ -25,7 +25,16 @@ These are stated on the page and will go stale at a spec revision:
 
 ## Deploy
 
-Host-agnostic — a single file. GitHub Pages from a TRUGS-LLC repository is the natural home, since the specification already lives in that organization.
+The canonical home is **https://trugs.ai**, served by GitHub Pages from this repository. `CNAME` declares the domain; GitHub reads it once Pages is enabled.
+
+Two steps remain to go live, both owner actions:
+
+1. **Enable Pages** — repository Settings → Pages → build from branch `main`, folder `/` (root).
+2. **Point DNS** — `trugs.ai` is an apex domain, so it needs `A` records to GitHub's four Pages addresses (and/or the `AAAA` equivalents). The exact set is shown in the repository's own Pages settings after step 1; use that list rather than a copied one.
+
+Until DNS resolves, Pages serves the page at `https://trugs-llc.github.io/TRUGS-SITE/`.
+
+The page is a single static file with no build step, so it will serve unchanged from any host if Pages is ever replaced.
 
 ## Preview locally
 
