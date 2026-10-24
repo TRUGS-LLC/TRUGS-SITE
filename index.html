@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TRUGS Specification</title>
 <meta name="description" content="TRUGS — the Traceable Recursive Universal Graph Specification. A JSON graph specification with a 233-word formal English subset that compiles losslessly to graphs and back. Apache 2.0, maintained by TRUGS LLC.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#f1f3f5;
@@ -22,9 +19,9 @@
     --code-fg:#e6ebf0;
     --code-accent:#8fa8ff;
     --ok:#1d6b4f;
-    --font-sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-    --font-serif:'IBM Plex Serif',Georgia,serif;
-    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --font-sans:system-ui,-apple-system,'Segoe UI',sans-serif;
+    --font-serif:Georgia,serif;
+    --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -65,7 +62,9 @@
     font-family:var(--font-sans);font-size:1.02rem;line-height:1.6;
     padding-inline:20px;padding-block:0 80px;-webkit-font-smoothing:antialiased;
   }
-  a{color:var(--accent)}
+  a{color:var(--accent);overflow-wrap:anywhere}
+  .grid > *, .pair > *, .rt > *{min-width:0}
+  pre{max-width:100%}
   a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
   h1,h2,h3{margin:0;line-height:1.15;font-weight:600;text-wrap:balance;letter-spacing:-.015em}
   h2{font-size:clamp(1.55rem,3vw,2.1rem)}
@@ -203,6 +202,8 @@
     </div>
     <nav aria-label="Sections">
       <a href="#what">What it is</a>
+      <a href="#types">Four types</a>
+      <a href="onboard/">Onboard</a>
       <a href="#validate">Validation</a>
       <a href="#language">Language</a>
       <a href="#core">CORE</a>
@@ -219,7 +220,7 @@
     <p class="lede">TRUGS is a JSON graph format for structured information, and it comes with sixteen validation rules and a reference validator. A graph either satisfies CORE or it does not — the answer is mechanical, and it is the same answer for everyone who asks. The same artifact is also a sentence: TRUGS/L is its human-readable rendering, and the two are one thing written two ways.</p>
     <div class="cta">
       <a class="btn solid" href="https://github.com/TRUGS-LLC/TRUGS">Read the specification</a>
-      <a class="btn line" href="#tools">Install the tooling</a>
+      <a class="btn line" href="onboard/">Start with the onboarding kit</a>
     </div>
   </section>
 
@@ -247,6 +248,18 @@
       </div>
     </div>
     <p class="lossless">The sentence is the program. The graph is the AST. They are one artifact in two renderings.</p>
+  </section>
+
+  <section id="types" aria-labelledby="types-h">
+    <div class="label">Four types</div>
+    <h2 id="types-h">Describe. Say. Compute. Govern.</h2>
+    <dl class="dl">
+      <div><dt>Describe</dt><dd>Map sources into graphs with <a href="https://github.com/TRUGS-LLC/TRUGS-WEB">trugs-web 2.1.0</a>. Open a graph in <a href="https://trugs-llc.github.io/TRUGS-VIEWER/">TRUGS-VIEWER</a>, a live demonstration.</dd></div>
+      <div><dt>Say</dt><dd>Express graphs as sentences with <a href="https://github.com/TRUGS-LLC/TRUGS-TOOLS">trugs-tools 2.4.0</a> and its <code>trug trl</code> command family.</dd></div>
+      <div><dt>Compute</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-ACCOUNTING-CALCULATOR">TRUGS-ACCOUNTING-CALCULATOR</a> represents calculations as graphs and compiles them to native executables.</dd></div>
+      <div><dt>Govern</dt><dd>Use graphs to govern work. The runner is coming after this release.</dd></div>
+    </dl>
+    <p style="margin-top:24px">TRUGS-TRL and TRUGS-LAW are coming after this release. The payment-schedule example joining TRL and the calculator is coming after this release.</p>
   </section>
 
   <section id="validate" class="keystone" aria-labelledby="val-h">
@@ -278,7 +291,7 @@
       <li><b>8</b>Extension declaration</li>
       <li><b>9</b>Metric level format</li>
     </ul>
-    <p style="margin-top:18px;color:var(--ink-soft);font-size:.95rem;max-width:68ch">Those are the nine core structural rules; seven compositional rules complete the sixteen. <a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SPEC_validation.md">SPEC_validation.md</a> carries the rules, a complete validator implementation, an error-code reference, and integrations for the CLI, Python, CI and pre-commit hooks.</p>
+    <p style="margin-top:18px;color:var(--ink-soft);font-size:.95rem;max-width:68ch">Those are the nine core structural rules; seven compositional rules complete the sixteen. <a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SPEC_validation.md">SPEC_validation.md</a> carries the structural rules, a reference implementation and an error-code reference; CORE defines the compositional rules.</p>
   </section>
 
   <section id="language" aria-labelledby="lang-h">
@@ -313,8 +326,8 @@
     <div class="nums">
       <div><span class="n">233</span><span class="t">executable words, plus the sugar pattern</span></div>
       <div><span class="n">9</span><span class="t">parts of speech</span></div>
-      <div><span class="n">21</span><span class="t">SI level prefixes, new at 2.0.0</span></div>
-      <div><span class="n">30</span><span class="t">parsed examples, 13 patterns</span></div>
+      <div><span class="n">21</span><span class="t">SI level prefixes</span></div>
+      <div><span class="n">30</span><span class="t">parsed examples</span></div>
     </div>
   </section>
 
@@ -333,7 +346,7 @@
     <div class="nums">
       <div><span class="n">7</span><span class="t">boundaries</span></div>
       <div><span class="n">10</span><span class="t">primitive classes</span></div>
-      <div><span class="n">~131</span><span class="t">primitives</span></div>
+      <div><span class="n">~140</span><span class="t">primitives</span></div>
       <div><span class="n">16</span><span class="t">validation rules</span></div>
     </div>
   </section>
@@ -359,8 +372,8 @@
           <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SPEC_validation.md">SPEC_validation.md</a></td><td>Validation rules, with implementations</td></tr>
           <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_PROTOCOL/SCHEMA.md">SCHEMA.md</a></td><td>JSON schema reference</td></tr>
           <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_vocabulary.md">SPEC_vocabulary.md</a></td><td>The 233 words, 9 parts of speech, formal definitions</td></tr>
-          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_grammar.md">SPEC_grammar.md</a></td><td>BNF grammar, composition rules, 12 validation rules</td></tr>
-          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_examples.md">SPEC_examples.md</a></td><td>30 parsed examples across 13 patterns</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_grammar.md">SPEC_grammar.md</a></td><td>BNF grammar and composition rules</td></tr>
+          <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/SPEC_examples.md">SPEC_examples.md</a></td><td>30 parsed examples</td></tr>
           <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/CHEATSHEET.md">CHEATSHEET.md</a></td><td>The vocabulary at a glance</td></tr>
           <tr><td><a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/TRUGS_LANGUAGE/language.trug.json">language.trug.json</a></td><td>The opening TRUG — the language defining itself</td></tr>
         </tbody>
@@ -370,29 +383,15 @@
 
   <section id="tools" aria-labelledby="tools-h">
     <div class="grid">
-      <div>
-        <div class="label">Tooling</div>
-        <h2 id="tools-h">The <span class="mono">trug</span> CLI.</h2>
-      </div>
+      <div><div class="label">Released tooling</div><h2 id="tools-h">Read, write and check graphs.</h2></div>
       <div class="prose">
-        <p>Validation, TRL compile and decompile, graph CRUD, and compliance checking — eight language verbs. Filesystem-to-graph cartography ships separately.</p>
+        <p><a href="https://pypi.org/project/trugs-tools/2.4.0/">trugs-tools 2.4.0</a> provides the <code>trug</code> CLI: validation, TRL compile and decompile, graph CRUD and compliance checking. <a href="https://pypi.org/project/trugs-store/2.2.0/">trugs-store 2.2.0</a> is the shared graph storage layer. <a href="https://pypi.org/project/trugs-web/2.1.0/">trugs-web 2.1.0</a> describes folders as graphs and queries them. The language and describe tools require Python 3.11 or later.</p>
+        <p><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-AGENT</a> is the onboarding kit. Its installer, <a href="https://pypi.org/project/trugs-agent/2.0.0/">trugs-agent 2.0.0</a>, places the entry instructions in your project. <a href="onboard/">Install the kit and run its check.</a></p>
+        <p>After installing, inspect the language commands:</p>
+        <pre aria-label="Language help commands">trug --help
+trug trl --help</pre>
+        <p style="margin-top:12px">Both commands print usage and available subcommands, then exit with status 0.</p>
       </div>
-    </div>
-
-    <pre aria-label="Installation commands"><span class="c"># the language CLI — 8 verbs</span>
-pip install trugs-tools
-trug --help
-
-<span class="c"># validate a graph against all 16 CORE rules</span>
-trug validate path/to/file.trug.json
-trug validate --all ./graphs
-
-<span class="c"># filesystem ↔ graph cartography, separate package</span>
-pip install trugs-folder
-trug-a-folder check .</pre>
-
-    <div class="warn">
-      <b>Do not install <code>trugs</code>.</b> As of 2.0.0 that PyPI name is a reserved, intentionally empty placeholder — it ships no CLI and no importable content. The tooling is <code>trugs-tools</code>. If you are coming from 1.x, the console script was renamed <code>tg</code> → <code>trug</code>, and the cartography verbs <code>check</code>, <code>ls</code>, <code>sync</code> and <code>render</code> moved out to <code>trug-a-folder</code>.
     </div>
   </section>
 
@@ -400,10 +399,10 @@ trug-a-folder check .</pre>
     <div class="grid">
       <div>
         <div class="label">Examples</div>
-        <h2 id="ex-h">Seven domains, all validating.</h2>
+        <h2 id="ex-h">Graphs across domains.</h2>
       </div>
       <div class="prose">
-        <p>Sample TRUGs at varying complexity in the <a href="https://github.com/TRUGS-LLC/TRUGS/tree/main/EXAMPLES">EXAMPLES</a> directory. Every one of them passes validation in CI.</p>
+        <p>Sample TRUGs at varying complexity in the <a href="https://github.com/TRUGS-LLC/TRUGS/tree/main/EXAMPLES">EXAMPLES</a> directory. The repository carries examples to inspect and validate.</p>
         <div class="domains">
           <span>knowledge</span><span>living</span><span>memory</span><span>nested</span><span>research</span><span>web</span><span>writer</span>
         </div>
@@ -419,17 +418,9 @@ trug-a-folder check .</pre>
       </div>
       <div class="prose">
         <p><code>folder.trug.json</code> at the repository root is a machine-readable index: every top-level folder, every reference document and every public tool has a node, with typed edges to the specs it implements or describes.</p>
-        <p>CI runs the full check plus <code>trug compliance</code> on every push and pull request. The section list in the README, the specification index, and the tool table all correspond to nodes you can traverse programmatically — and when the graph drifts from the prose or the filesystem, the build fails.</p>
+        <p>CI checks the repository on every push and pull request. The section list in the README, the specification index, and the tool table all correspond to nodes you can traverse programmatically — and when the graph drifts from the prose or the filesystem, the build fails.</p>
       </div>
     </div>
-    <pre aria-label="Traversing the repository graph"><span class="c"># what is in this repo?</span>
-trug-a-folder ls .
-
-<span class="c"># what does a tool implement, and what tests it?</span>
-trug get folder.trug.json tools_build_language_trug --edges
-
-<span class="c"># does the graph still match the filesystem?</span>
-trug-a-folder check .</pre>
   </section>
 
   <section id="build" aria-labelledby="build-h">
@@ -477,14 +468,29 @@ trug-a-folder check .</pre>
       </div>
       <div class="prose">
         <p>The specification and its reference tools are released under the <a href="https://github.com/TRUGS-LLC/TRUGS/blob/main/LICENSE">Apache License 2.0</a>. The standard is stewarded by <strong>TRUGS LLC</strong>, which maintains CORE and the language and holds the specification neutral of any one implementer.</p>
-        <p>The published record is <a href="https://doi.org/10.5281/zenodo.19379454">DOI 10.5281/zenodo.19379454</a>. Requires Python 3.10 or later for the reference tooling.</p>
+        <p>The published record is <a href="https://doi.org/10.5281/zenodo.19379454">DOI 10.5281/zenodo.19379454</a>. </p>
       </div>
     </div>
     <div class="dl">
       <div><dt>Specification</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS">TRUGS-LLC/TRUGS</a> — the normative text, examples, and the self-describing graph</dd></div>
       <div><dt>Language CLI</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-TOOLS">TRUGS-LLC/TRUGS-TOOLS</a> — <code>trugs-tools</code>, the <code>trug</code> binary</dd></div>
-      <div><dt>Agent protocol</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-LLC/TRUGS-AGENT</a> — one file that teaches an LLM to speak TRUG/L, with a development protocol, a portfolio tracker and persistent memory</dd></div>
+      <div><dt>Onboarding kit</dt><dd><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-LLC/TRUGS-AGENT</a> — entry instructions, a primer, examples and an installer for agents</dd></div>
     </div>
+  </section>
+
+  <section id="repositories" aria-labelledby="repos-h">
+    <div class="label">Repositories</div><h2 id="repos-h">The public material.</h2>
+    <ul>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS">TRUGS</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-TOOLS">TRUGS-TOOLS</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-STORE">TRUGS-STORE</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-WEB">TRUGS-WEB</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-VIEWER">TRUGS-VIEWER</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-ACCOUNTING-CALCULATOR">TRUGS-ACCOUNTING-CALCULATOR</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-AGENT</a></li>
+      <li><a href="https://github.com/TRUGS-LLC/TRUGS-SITE">TRUGS-SITE</a></li>
+    </ul>
+    <h3>Companies</h3><p style="margin-top:12px">One owner holds both TRUGS LLC and Arek Starr LLC. Arek Starr LLC is the only company building TRUGS. TRUGS LLC’s open material needs no Arek Starr LLC product.</p>
   </section>
 
   <footer>
