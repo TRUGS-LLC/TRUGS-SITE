@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Onboard with TRUGS</title>
+<meta name="description" content="Install the TRUGS onboarding kit, check your project, and read the agent entry and primer.">
+<style>
+  :root{
+    --paper:#f1f3f5;
+    --surface:#ffffff;
+    --ink:#11161b;
+    --ink-soft:#4d5a66;
+    --ink-faint:#7b8794;
+    --rule:#d5dbe0;
+    --accent:#1f3fd1;
+    --accent-soft:#e3e8fb;
+    --code-bg:#11161b;
+    --code-fg:#e6ebf0;
+    --code-accent:#8fa8ff;
+    --ok:#1d6b4f;
+    --font-sans:system-ui,-apple-system,'Segoe UI',sans-serif;
+    --font-serif:Georgia,serif;
+    --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0d1116;
+      --surface:#151b22;
+      --ink:#e7edf3;
+      --ink-soft:#9fb0bf;
+      --ink-faint:#71808e;
+      --rule:#242e38;
+      --accent:#8fa8ff;
+      --accent-soft:#1a2440;
+      --code-bg:#080b0f;
+      --code-fg:#dbe4ec;
+      --code-accent:#8fa8ff;
+      --ok:#5fc39b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0d1116;
+    --surface:#151b22;
+    --ink:#e7edf3;
+    --ink-soft:#9fb0bf;
+    --ink-faint:#71808e;
+    --rule:#242e38;
+    --accent:#8fa8ff;
+    --accent-soft:#1a2440;
+    --code-bg:#080b0f;
+    --code-fg:#dbe4ec;
+    --code-accent:#8fa8ff;
+    --ok:#5fc39b;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--font-sans);font-size:1.02rem;line-height:1.6;
+    padding-inline:20px;padding-block:0 80px;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);overflow-wrap:anywhere}
+  .grid > *, .pair > *, .rt > *{min-width:0}
+  pre{max-width:100%}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  h1,h2,h3{margin:0;line-height:1.15;font-weight:600;text-wrap:balance;letter-spacing:-.015em}
+  h2{font-size:clamp(1.55rem,3vw,2.1rem)}
+  h3{font-size:1.12rem;font-weight:600}
+  p{margin:0 0 1em}
+  .wrap{max-width:880px;margin:0 auto}
+  .prose{max-width:68ch}
+  .mono{font-family:var(--font-mono)}
+  .label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+  /* header */
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-block:20px 16px;border-bottom:1px solid var(--rule)}
+  .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .brand .name{font-family:var(--font-mono);font-size:1.15rem;font-weight:600;letter-spacing:.14em;color:var(--ink);text-decoration:none}
+  .chip{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;padding:2px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink-soft)}
+  .chip.v{border-color:var(--accent);color:var(--accent)}
+  header.top nav{display:flex;gap:18px;flex-wrap:wrap}
+  header.top nav a{font-size:.88rem;font-weight:500;color:var(--ink-soft);text-decoration:none}
+  header.top nav a:hover{color:var(--accent)}
+
+  /* hero */
+  .hero{padding-block:60px 48px;border-bottom:1px solid var(--rule)}
+  .hero h1{font-family:var(--font-mono);font-size:clamp(2.7rem,9vw,5rem);font-weight:600;letter-spacing:.09em;margin:0 0 12px}
+  .expand{font-family:var(--font-mono);font-size:clamp(.82rem,1.7vw,1rem);color:var(--ink-soft);margin:0 0 26px;letter-spacing:.02em}
+  .expand b{color:var(--accent);font-weight:600}
+  .hero .tagline{font-size:clamp(1.35rem,3.1vw,2.05rem);font-weight:600;line-height:1.2;letter-spacing:-.015em;max-width:21ch;margin:0}
+  .hero .lede{font-size:clamp(1.05rem,1.9vw,1.2rem);color:var(--ink-soft);max-width:60ch;margin-top:20px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .btn{display:inline-block;padding:11px 18px;border-radius:4px;font-weight:600;font-size:.94rem;text-decoration:none;border:1.5px solid var(--accent);transition:background .15s,color .15s}
+  .btn.solid{background:var(--accent);color:var(--paper)}
+  .btn.solid:hover{background:transparent;color:var(--accent)}
+  .btn.line{color:var(--accent)}
+  .btn.line:hover{background:var(--accent-soft)}
+
+  section{padding-block:56px;border-bottom:1px solid var(--rule);scroll-margin-top:12px}
+  section:last-of-type{border-bottom:none}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:28px 44px;align-items:start}
+  @media (max-width:740px){ .grid{grid-template-columns:1fr;gap:16px} }
+
+  /* code */
+  pre{
+    background:var(--code-bg);color:var(--code-fg);font-family:var(--font-mono);
+    font-size:.85rem;line-height:1.65;padding:18px 20px;border-radius:6px;
+    overflow-x:auto;margin:0;
+  }
+  pre b{color:var(--code-accent);font-weight:600}
+  pre .c{color:#7b8794}
+  code{font-family:var(--font-mono);font-size:.9em;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:3px}
+
+  /* round trip */
+  .rt{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-top:28px}
+  .rt .side{border:1px solid var(--rule);border-radius:6px;padding:16px 18px;background:var(--surface)}
+  .rt .side .k{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+  .rt .side .v{font-family:var(--font-mono);font-size:.88rem;color:var(--ink)}
+  .rt .arrow{font-family:var(--font-mono);font-size:1.3rem;color:var(--accent);text-align:center;line-height:1.2}
+  .rt .arrow small{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  @media (max-width:620px){ .rt{grid-template-columns:1fr} .rt .arrow{transform:rotate(90deg);padding-block:4px} }
+  .lossless{font-family:var(--font-serif);font-size:clamp(1.2rem,2.4vw,1.55rem);line-height:1.4;margin-top:26px;max-width:32ch;color:var(--ink)}
+
+  /* ruled lists */
+  .dl{margin:24px 0 0;border-top:1px solid var(--rule)}
+  .dl > div{display:grid;grid-template-columns:minmax(8rem,11rem) minmax(0,1fr);gap:4px 22px;padding-block:14px;border-bottom:1px solid var(--rule)}
+  .dl dt{font-weight:600;margin:0}
+  .dl dd{margin:0;color:var(--ink-soft);font-size:.96rem}
+  @media (max-width:560px){ .dl > div{grid-template-columns:1fr} }
+
+  /* numbers row */
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0;margin-top:26px;border-top:1px solid var(--rule)}
+  .nums div{padding:20px 18px 14px 0;border-bottom:1px solid var(--rule)}
+  .nums div + div{border-left:1px solid var(--rule);padding-left:18px}
+  .nums .n{font-family:var(--font-mono);font-size:1.75rem;font-weight:600;color:var(--accent);display:block;line-height:1}
+  .nums .t{font-size:.88rem;color:var(--ink-soft);margin-top:6px;display:block}
+  @media (max-width:620px){ .nums{grid-template-columns:1fr 1fr} .nums div:nth-child(odd){border-left:0;padding-left:0} }
+
+  /* doc table */
+  .tbl{width:100%;border-collapse:collapse;margin-top:24px;font-size:.94rem}
+  .tbl th{text-align:left;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;padding:0 14px 10px 0;border-bottom:1px solid var(--rule)}
+  .tbl td{padding:12px 14px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-soft)}
+  .tbl td:first-child{white-space:nowrap}
+  .tbl td a{font-family:var(--font-mono);font-size:.88rem;font-weight:500;text-decoration:none}
+  .tbl td a:hover{text-decoration:underline}
+  .tbl-scroll{overflow-x:auto}
+
+  /* callout — used once */
+  .warn{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 20px;border-radius:0 5px 5px 0;margin-top:24px;font-size:.95rem;max-width:68ch}
+  .warn b{color:var(--ink)}
+
+  .domains{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .domains span{font-family:var(--font-mono);font-size:.82rem;padding:5px 11px;border:1px solid var(--rule);border-radius:3px;color:var(--ink-soft)}
+
+  /* validation — the one emphasised section */
+  section.keystone{border-top:3px solid var(--accent)}
+  section:has(+ section.keystone){border-bottom:0}
+  .verdict{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-top:28px;max-width:560px}
+  .verdict .box{border:1.5px solid var(--rule);border-radius:6px;padding:14px 16px;text-align:center;font-family:var(--font-mono);font-size:.95rem;background:var(--surface)}
+  .verdict .box.y{border-color:var(--ok);color:var(--ok)}
+  .verdict .box.n{border-color:var(--accent);color:var(--accent)}
+  .verdict .or{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);text-align:center}
+  .rules{columns:2;column-gap:32px;margin:26px 0 0;padding:0;list-style:none;max-width:640px}
+  .rules li{break-inside:avoid;font-size:.93rem;color:var(--ink-soft);padding-block:6px;border-bottom:1px solid var(--rule)}
+  .rules li b{font-family:var(--font-mono);font-size:.76rem;color:var(--accent);margin-right:8px}
+  @media (max-width:560px){ .rules{columns:1} }
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+  .pair .cap{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+  .pair pre{font-size:.8rem}
+  .pair pre i{color:#d4a04a;font-style:normal}
+  @media (max-width:640px){ .pair{grid-template-columns:1fr} }
+  .same{font-family:var(--font-mono);font-size:.8rem;color:var(--ok);margin-top:12px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:24px;border-top:1px solid var(--rule)}
+  .split > div{padding:20px 20px 8px 0;border-bottom:1px solid var(--rule)}
+  .split > div + div{border-left:1px solid var(--rule);padding-left:20px}
+  .split .k{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .split p{font-size:.95rem;color:var(--ink-soft);margin:0 0 .7em}
+  .split .fixed{color:var(--ink-faint);font-family:var(--font-mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase}
+  @media (max-width:600px){ .split{grid-template-columns:1fr} .split > div + div{border-left:0;padding-left:0} }
+  .steps-n{margin:24px 0 0;padding-left:1.35em;max-width:68ch}
+  .steps-n li{margin-bottom:9px;color:var(--ink-soft)}
+  .steps-n li.must{color:var(--ink);font-weight:500}
+  .steps-n li.must b{color:var(--accent)}
+  .pullquote{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.15rem,2.2vw,1.4rem);line-height:1.45;border-left:3px solid var(--accent);padding-left:20px;margin:26px 0 0;max-width:40ch}
+
+  footer{padding-top:26px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--ink-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--ink-soft)}
+  footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top"><div class="brand"><a class="name" href="../">TRUGS</a><span class="chip">Onboarding</span></div><nav aria-label="Navigation"><a href="../">Home</a><a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">The kit</a></nav></header>
+<main>
+<section class="hero" aria-labelledby="h1"><div class="label">Start here</div><h1 id="h1" style="font-size:clamp(2rem,7vw,3.5rem);letter-spacing:0">Give your agent the kit.</h1>
+<p class="lede">TRUGS-AGENT is the onboarding kit: entry instructions, a primer and examples. TRL is the sentence form of a graph. Compiling and validating its structure does not prove that an agent obeys it.</p>
+<p>These commands and expected outputs follow the kit’s <a href="https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/README.md">README</a>.</p></section>
+<section aria-labelledby="install-h"><h2 id="install-h">Install in your Python environment.</h2>
+<p style="margin-top:20px">Use Python 3.11 or later. Install the language tools, describe tool and onboarding installer from the Python package index:</p>
+<pre aria-label="Install command">python -m pip install --quiet &quot;trugs-tools&gt;=2.4.0,&lt;3&quot; trugs-web==2.1.0 trugs-agent==2.0.0</pre>
+<p style="margin-top:12px">Expected stdout: empty; exit status 0.</p>
+<p>Check the installed version:</p><pre>trugs-agent --version</pre>
+<p style="margin-top:12px">Expected stdout: <code>trugs-agent 2.0.0</code>; exit status 0.</p>
+<p><a href="https://pypi.org/project/trugs-agent/2.0.0/">trugs-agent package page</a></p></section>
+<section aria-labelledby="project-h"><h2 id="project-h">In your agent’s project.</h2>
+<p style="margin-top:20px">Run the installer from your project directory. It lists every destination before writing. Existing files require a terminal and an explicit <code>yes</code>.</p>
+<pre>trugs-agent install</pre>
+<p style="margin-top:12px">It lists AGENTS.md, CLAUDE.md, the Cursor rule and plugin manifest, then prints <code>PASS: trugs-agent check</code> on success (status 0).</p>
+<p>Run the check explicitly:</p><pre>trugs-agent check</pre>
+<p style="margin-top:12px">Expected stdout: <code>PASS: trugs-agent check</code>; exit status 0.</p>
+</section>
+<section aria-labelledby="read-h"><h2 id="read-h">Read the entry, then the primer.</h2>
+<p style="margin-top:20px">Have your agent read the installed <a href="https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/AGENTS.md">AGENTS.md</a>, then <a href="https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/PRIMER.md">PRIMER.md</a>. The primer explains the graph, vocabulary and validation loop. Return to the <a href="https://github.com/TRUGS-LLC/TRUGS-AGENT">TRUGS-AGENT repository</a> for examples and the map.</p>
+</section>
+<section aria-labelledby="company-h"><h2 id="company-h">Companies</h2><p style="margin-top:20px">One owner holds both TRUGS LLC and Arek Starr LLC. Arek Starr LLC is the only company building TRUGS. TRUGS LLC’s open material needs no Arek Starr LLC product.</p></section>
+</main>
+<footer><div>© 2026 TRUGS LLC · Apache-2.0</div><div><a href="../">Home</a> · <a href="../LICENSE">License</a></div></footer>
+</div></body></html>
