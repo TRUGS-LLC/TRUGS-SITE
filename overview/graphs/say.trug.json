@@ -1,0 +1,83 @@
+{
+  "name": "instruct",
+  "version": "1.0.0",
+  "type": "PROJECT",
+  "dimension": "system",
+  "dimensions": {
+    "system": {
+      "description": "Compiled TRUG graph: instruct"
+    }
+  },
+  "nodes": [
+    {
+      "id": "helper",
+      "type": "AGENT",
+      "properties": {},
+      "parent_id": "root",
+      "contains": [],
+      "metric_level": "DECI_AGENT",
+      "dimension": "system"
+    },
+    {
+      "id": "op-1",
+      "type": "TRANSFORM",
+      "properties": {
+        "operation": "READ",
+        "verb_subcategory": "move"
+      },
+      "parent_id": "root",
+      "contains": [],
+      "metric_level": "DECI_TRANSFORM",
+      "dimension": "system"
+    },
+    {
+      "id": "guide",
+      "type": "FILE",
+      "properties": {},
+      "parent_id": "root",
+      "contains": [],
+      "metric_level": "DECI_FILE",
+      "dimension": "system"
+    },
+    {
+      "id": "root",
+      "type": "PROJECT",
+      "properties": {},
+      "parent_id": null,
+      "contains": [
+        "helper",
+        "op-1",
+        "guide"
+      ],
+      "metric_level": "BASE_PROJECT",
+      "dimension": "system"
+    }
+  ],
+  "edges": [
+    {
+      "from_id": "helper",
+      "to_id": "op-1",
+      "relation": "SHALL",
+      "properties": {
+        "np_shape": {
+          "noun_type": "AGENT"
+        }
+      }
+    },
+    {
+      "from_id": "op-1",
+      "to_id": "guide",
+      "relation": "ACTS_ON",
+      "properties": {
+        "np_shape": {
+          "noun_type": "FILE"
+        }
+      }
+    }
+  ],
+  "capabilities": {
+    "vocabularies": [
+      "core_v2.0.0"
+    ]
+  }
+}
