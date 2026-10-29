@@ -1,0 +1,93 @@
+{
+  "dimension": "system",
+  "dimensions": {
+    "system": {
+      "description": "Canonical executable graph"
+    }
+  },
+  "edges": [
+    {
+      "from_id": "program",
+      "relation": "RETURNS_TO",
+      "to_id": "sum"
+    },
+    {
+      "from_id": "program",
+      "relation": "THEN",
+      "to_id": "done"
+    },
+    {
+      "from_id": "sum",
+      "relation": "LEFT",
+      "to_id": "amount_a"
+    },
+    {
+      "from_id": "sum",
+      "relation": "RIGHT",
+      "to_id": "amount_b"
+    }
+  ],
+  "name": "Add two amounts",
+  "nodes": [
+    {
+      "contains": [],
+      "dimension": "system",
+      "id": "amount_a",
+      "metric_level": "BASE_ELEMENT",
+      "parent_id": null,
+      "properties": {
+        "coefficient": "200",
+        "scale": 2,
+        "unit": "value"
+      },
+      "type": "AMOUNT"
+    },
+    {
+      "contains": [],
+      "dimension": "system",
+      "id": "amount_b",
+      "metric_level": "BASE_ELEMENT",
+      "parent_id": null,
+      "properties": {
+        "coefficient": "300",
+        "scale": 2,
+        "unit": "value"
+      },
+      "type": "AMOUNT"
+    },
+    {
+      "contains": [],
+      "dimension": "system",
+      "id": "done",
+      "metric_level": "BASE_ELEMENT",
+      "parent_id": null,
+      "properties": {},
+      "type": "EXIT"
+    },
+    {
+      "contains": [],
+      "dimension": "system",
+      "id": "program",
+      "metric_level": "BASE_ELEMENT",
+      "parent_id": null,
+      "properties": {},
+      "type": "PROCESS"
+    },
+    {
+      "contains": [],
+      "dimension": "system",
+      "id": "sum",
+      "metric_level": "BASE_ELEMENT",
+      "parent_id": null,
+      "properties": {
+        "round": "",
+        "scale": 2,
+        "unit": "value"
+      },
+      "type": "ADD"
+    }
+  ],
+  "profile": "compute/2",
+  "type": "PROJECT",
+  "version": "1.0.0"
+}

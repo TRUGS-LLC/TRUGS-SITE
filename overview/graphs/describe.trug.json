@@ -1,0 +1,71 @@
+{
+  "name": "folder",
+  "version": "1.0.0",
+  "type": "PROJECT",
+  "dimension": "system",
+  "dimensions": {
+    "system": {
+      "description": "Folder contents and references"
+    }
+  },
+  "nodes": [
+    {
+      "id": "module_cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+      "type": "MODULE",
+      "properties": {
+        "path": ".",
+        "name": ".",
+        "kind": "folder",
+        "size": 35,
+        "sha256": "ece52397c2727f22c5d044f6619e4b6c235d210680541cf85e78b8f01759e03b",
+        "unread": []
+      },
+      "parent_id": null,
+      "contains": [
+        "file_dc0dbe13416a77d17f112b7668fb77ba60dc51e684d2cc20e8850df204e53846",
+        "file_754b6dc3f8728b1991298d8359218165de3ef7439963168565aaaaf7a99b3edd"
+      ],
+      "metric_level": "BASE_MODULE",
+      "dimension": "system"
+    },
+    {
+      "id": "file_dc0dbe13416a77d17f112b7668fb77ba60dc51e684d2cc20e8850df204e53846",
+      "type": "FILE",
+      "properties": {
+        "path": "guide.md",
+        "name": "guide.md",
+        "kind": "md",
+        "size": 27,
+        "sha256": "f86fd206cc5e060537a5202040b6dd02ef97b3bc2fac54fde49ed159cb039e88",
+        "title": "Guide"
+      },
+      "parent_id": "module_cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+      "contains": [],
+      "metric_level": "BASE_FILE",
+      "dimension": "system"
+    },
+    {
+      "id": "file_754b6dc3f8728b1991298d8359218165de3ef7439963168565aaaaf7a99b3edd",
+      "type": "FILE",
+      "properties": {
+        "path": "notes.md",
+        "name": "notes.md",
+        "kind": "md",
+        "size": 8,
+        "sha256": "365d0b84ae63c2afc293dedd2b00bdf0dc8d6ef70c9297d90f9e5682ab0d72ee",
+        "title": "Notes"
+      },
+      "parent_id": "module_cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+      "contains": [],
+      "metric_level": "BASE_FILE",
+      "dimension": "system"
+    }
+  ],
+  "edges": [
+    {
+      "from_id": "file_dc0dbe13416a77d17f112b7668fb77ba60dc51e684d2cc20e8850df204e53846",
+      "to_id": "file_754b6dc3f8728b1991298d8359218165de3ef7439963168565aaaaf7a99b3edd",
+      "relation": "REFERENCES"
+    }
+  ]
+}

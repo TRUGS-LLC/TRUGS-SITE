@@ -1,9 +1,12 @@
 # trugs-site
 
-The public website for the TRUGS specification: two static pages, no script, build step or dependency.
+The public website for the TRUGS specification: three static pages, no script, build step or dependency.
 
 - `index.html` — specification, four types, released tooling and public repositories.
 - [onboard/](onboard/) — the onboarding kit’s install and check sequence.
+- [overview/](overview/) — a plain-language overview with four worked drawings.
+- [Overview PDF](overview/trugs-overview.pdf) — the overview for reading offline.
+- `overview/graphs/` — the four drawings’ source graphs.
 - [LICENSE](LICENSE) and [NOTICE](NOTICE) — the site’s Apache licence and notice.
 - `CNAME` — the domain declaration for trugs.ai.
 
