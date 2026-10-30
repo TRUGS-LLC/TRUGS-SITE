@@ -302,7 +302,7 @@
         <h2 id="lang-h">TRUG/L</h2>
       </div>
       <div class="prose">
-        <p><strong>TRUGS and TRUGS/L say the same thing.</strong> They are not two languages — they are one artifact in two renderings. The graph is what a machine reads; the sentence is what a person reads. Either can be produced from the other.</p>
+        <p><strong>TRUGS and TRUGS/L say the same thing.</strong> They are not two languages — they are one artifact in two renderings. The graph is what a machine reads; the sentence is what a person reads. Either can be produced from the other within the core vocabulary; a branch such as Compute round-trips its own graphs with its own tools.</p>
         <p>TRUG/L is a formalized subset of English drawn from computation, law, and the SI prefixes. Every word is in the vocabulary; nothing outside it parses.</p>
       </div>
     </div>
@@ -418,7 +418,7 @@ trug trl --help</pre>
         <h2 id="self-h">The repository is itself a TRUG.</h2>
       </div>
       <div class="prose">
-        <p><code>folder.trug.json</code> at the repository root is a machine-readable index: every top-level folder, every reference document and every public tool has a node, with typed edges to the specs it implements or describes.</p>
+        <p><code>folder.trug.json</code> at the repository root is a machine-readable index: selected folders, reference documents and tool files have nodes, with typed edges to the specs they implement or describe.</p>
         <p>CI checks the repository on every push and pull request. The section list in the README, the specification index, and the tool table all correspond to nodes you can traverse programmatically — and when the graph drifts from the prose or the filesystem, the build fails.</p>
       </div>
     </div>
