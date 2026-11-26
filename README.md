@@ -25,11 +25,11 @@ One owner holds both TRUGS LLC and Arek Starr LLC. Arek Starr LLC is the only co
 
 ## Coming work
 
-TRUGS-TRL and TRUGS-LAW are coming after this release. The payment-schedule example joining TRL and the calculator is coming after this release. The runner is coming after this release.
+TRUGS-TRL and TRUGS-LAW are coming after this release. The payment-schedule example joining TRL and the calculator is coming after this release.
 
 ## Sources and facts
 
-Content pins: TRUGS `37bb78c7`; TRUGS-AGENT `1a17fb1f`; TRUGS-TOOLS `a0a4218f`; TRUGS-STORE `696d01fc`; TRUGS-WEB `aee2164e`; TRUGS-ACCOUNTING-CALCULATOR `b806f115`; TRUGS-VIEWER `c27e39fe`. Starting site: `d2de19cb29ccfecdaeceaf281053575961414493`.
+Content pins: TRUGS `37bb78c7`; TRUGS-AGENT `1a17fb1f`; TRUGS-TOOLS `a0a4218f`; TRUGS-STORE `696d01fc`; TRUGS-WEB `aee2164e`; TRUGS-ACCOUNTING-CALCULATOR `b806f115`; TRUGS-VIEWER `c27e39fe`; TRUGS-RUNNER `f4cfe1e6`. Starting site: `d2de19cb29ccfecdaeceaf281053575961414493`.
 The pages follow released tools, including the live [TRUGS-VIEWER](https://trugs-llc.github.io/TRUGS-VIEWER/). The pinned specification README’s describe version and viewer status predate those releases. Calculator behavior comes from [its README](https://github.com/TRUGS-LLC/TRUGS-ACCOUNTING-CALCULATOR/blob/b806f115/README.md); viewer behavior from [its README](https://github.com/TRUGS-LLC/TRUGS-VIEWER/blob/c27e39fe/README.md). Onboarding commands and expected outputs are copied from [the kit README](https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/README.md).
 
 One row per numeric or package fact on the pages; numbered rule labels identify the rules in the structural-rule source. Example literals are sample instructions, not service promises. Future changes should re-check every row.
@@ -60,6 +60,8 @@ One row per numeric or package fact on the pages; numbered rule labels identify 
 | trugs-web 2.1.0 | [Source](https://pypi.org/project/trugs-web/2.1.0/) |
 | trugs-agent package | [Source](https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/installer/pyproject.toml) |
 | trugs-agent 2.0.0 | [Source](https://pypi.org/project/trugs-agent/2.0.0/) |
+| trugs-runner package | [Source](https://github.com/TRUGS-LLC/TRUGS-RUNNER/blob/f4cfe1e6/pyproject.toml) |
+| trugs-runner 0.1.0 | [Source](https://pypi.org/project/trugs-runner/0.1.0/) |
 | Python 3.11 minimum for tools and describe | [Source](https://github.com/TRUGS-LLC/TRUGS-TOOLS/blob/a0a4218f/pyproject.toml) |
 | Onboarding install constraint >=2.4.0,<3 | [Source](https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/README.md) |
 | Onboarding command success status 0 | [Source](https://github.com/TRUGS-LLC/TRUGS-AGENT/blob/1a17fb1f/README.md) |
